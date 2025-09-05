@@ -38,8 +38,7 @@ imgEl.style.top  = '0';
 imgEl.style.transformOrigin = 'top left';
 imgEl.style.pointerEvents = 'none';
 
-Object.assign(prevBtn.style, { position: 'absolute', left: '1rem',  top: '50%', transform: 'translateY(-50%)', zIndex: '4' });
-Object.assign(nextBtn.style, { position: 'absolute', right: '1rem', top: '50%', transform: 'translateY(-50%)', zIndex: '4' });
+
 
 // Text steps in the HTML aside
 const textBox = document.getElementById('spotlight-text');
@@ -99,16 +98,7 @@ function renderSlide(i) {
 }
 
 // ===== Controls =====
-function nextSlide() { renderSlide(slideIdx + 1); }
-function prevSlide() { renderSlide(slideIdx - 1); }
-nextBtn.addEventListener('click', nextSlide);
-prevBtn.addEventListener('click', prevSlide);
 
-window.addEventListener('keydown', (e) => {
-  if (overlayBox.style.opacity !== '1') return;
-  if (e.key === 'ArrowRight') nextSlide();
-  if (e.key === 'ArrowLeft')  prevSlide();
-});
 
 // ===== Visibility & responsiveness =====
 new IntersectionObserver(([entry]) => {
@@ -128,17 +118,3 @@ if (window.map) {
 })();
 
 
-
-// ===== Pagination Dots =====
-const dotsBox = document.getElementById('spotlight-dots');
-const dots = SLIDES.map((_, i) => {
-  const d = document.createElement('div');
-  d.className = 'dot';
-  d.addEventListener('click', () => renderSlide(i));
-  dotsBox.appendChild(d);
-  return d;
-});
-
-function updateDots() {
-  dots.forEach((d, i) => d.classList.toggle('active', i === slideIdx));
-}

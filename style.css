@@ -233,7 +233,7 @@ html, body {
   align-items: flex-end;      /* align each button’s right edge */
 
   top: 50%;                   /* vertical midpoint of section */
-  right: 7rem;                /* inset from right */
+  right: 11vw;                /* inset from right */
   transform: translateY(-50%);/* true vertical centering */
 
   font-size: 1.6vw;
@@ -242,53 +242,33 @@ html, body {
   z-index: 6;
 }
 .source-button button {
-  background-color: rgba(255, 255, 255, 0.08); /* transparent white overlay */
+  background-color: rgba(255, 255, 255, 0.06); /* transparent white overlay */
   backdrop-filter: blur(8px);                 /* blur whatever is behind */
   -webkit-backdrop-filter: blur(8px);         /* Safari support */
   border: 0px;
   margin: 0.3em 0;            /* vertical spacing between buttons */
   text-align: right;          /* text aligned to the right edge */
-  width: 110%;
   padding: 6px;
   text-align: center;
+  width: 17vw;
+  padding: 8px;
+  font-size: 0.8vw;
   border-radius: 50vh;
-  color:#cad0d4;
-}
-
-/* keep your dots as-is */
-#spotlight-dots {
-  position: sticky;
-  bottom: 30px;
-  margin: auto;
-  width: fit-content;
-  z-index: 4;
-  display: flex;
-  justify-content: center;
-  gap: 0.8rem;
-  pointer-events: auto;
-}
-#spotlight-dots .dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #424242;    
+  color: #cad0d4;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: transform 0.1s ease, background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
 }
-#spotlight-dots .dot.active {
-  background: #fff; 
+.source-button button:hover {
+  transform: translateY(2px);
+}
+.source-button button.active {
+  background-color: #e2e2e2;
+  font-weight: bold;
+  color: #141414;
+  border: 1px solid #141414;
 }
 
-.nav-prev,
-.nav-next {
-  z-index: 5;
-  font-size: 5rem;         /* make arrow larger */
-  color: #fff;             /* arrow color */
-  background: none;        /* remove background */
-  border: none;            /* remove border */
-  padding: 0.5rem 1rem;    /* optional: adjust click area */
-  cursor: pointer;         /* pointer on hover */
-}
+
 
 .cluster {
   background: transparent;

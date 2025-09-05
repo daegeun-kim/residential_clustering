@@ -53,4 +53,29 @@
     goTo(current + (dy < 0 ? 1 : -1));
     touchY = null;
   }, { passive: false });
+
+
+
+  // Replace previous source-button event listener block with updated code to manage active state
+  (() => {
+    const buttons = document.querySelectorAll('.source-button button');
+    // Set the first button as active on page load
+    if (buttons.length > 0) {
+      buttons.forEach(b => b.classList.remove('active'));
+      buttons[0].classList.add('active');
+    }
+    buttons.forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        // Remove active class from all buttons and add to the clicked one
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        // Call renderSlide to update the visualization
+        if (typeof renderSlide === 'function') {
+          renderSlide(index);
+        } else {
+          console.warn('renderSlide function is not available.');
+        }
+      });
+    });
+  })();
 })();
