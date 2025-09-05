@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Manhattan Residential Clusters</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.js"></script>
+  <link rel="icon" href="data:,">
+  <link href="style.css" rel="stylesheet" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <div id="map-snapshot" style="display:none"></div>
+  <div id="map"></div>
+  <div id="map-dimmer"></div>
+  <main class="content">
+    <section class="title">
+      <div class="title-content">
+        <p id='title'><b>MANHATTAN<br> RESIDENTIAL<br> CLUSTERING</p></b>
+        <p id="name">
+          <b>Daegeun Kim<br>2025 Summer</b><br><br>
+        </p>
+        <p id="detail">
+          Urban Analysis<br>
+          Data Visualization<br>
+          K-Mean Clustering<br>
+        </p>
+      </div>
+    </section>
+    <section class="intro">
+      <div class="masked-bg">
+        <div id="map-overlays"></div>
+      </div>
+      <p id="intro">
+        <span id='intro-title'><b>Manhattan Residential Buildings</b></span><br>
+        Manhattan's residential buildings can be described by 
+        characteristics such as construction year, height,
+        and transit access. These factors enable classifications
+        into distinct clusters: socio-spatial, morpho-economic,
+        accessibility-value, and beyond.
+      </p>
+      <div id="description">
+        Residential Buildings:<br>
+        <li>Tax Class 1(Most residential property of up to three units)</li>
+        <li>All other property that is not in class 1 and is primarily residential</li>
+      </div>
+    </section>
+
+    <section class="map-spotlight">
+      <div id="spotlight-overlay">
+        <button class="nav-prev" aria-label="Previous">‹</button>
+        <figure><img id="spot-img" alt=""></figure>
+        <button class="nav-next" aria-label="Next">›</button>
+      </div>
+      <p id="source">
+        <b>Residential Source Data</b>
+      </p>
+      <p id='source-text'>
+        The dataset was constructed by combining and processing information from multiple sources.
+        All records were merged at the building level using the BIN (Building Identification Number)
+        as the unique key. Since several original datasets were provided at the tax lot level, 
+        these entries were duplicated and expanded to align with individual buildings.<br><br>
+      </p>
+      <aside id="spotlight-text">
+        <div class="step" data-key="BLD_STORY">
+          <span id="caption"><b>1. Building Stories</b></span><br>
+          <br>
+          Source: NYC OpenData<br>
+          Data: Property Valuation and Assessment Data Tax Classes 1,2,3,4<br>
+          Data Last Updated: May 29, 2025<br>
+          Data Provided By: Department of Finance<br>
+          <br><b>
+          Maximum: 71<br>
+          Mean: 7.863<br>
+          Median: 5<br></b>
+          <br>
+          Over half of Manhattan’s residential buildings are five Stories or below, concentrated in 
+          West Village, Soho, East Village, and Harlem. Taller residential buildings are dispersed citywide, 
+          with major clusters in Lower Manhattan, Midtown, and along the Hudson River and Central Park.<br>
+          <br>
+          *Original data might not contain all the information
+        </div>
+        <div class="step" data-key="construction_year">
+          <span id="caption"><b>2. Building Construction Year</b></span><br>
+          <br>
+          Source: NYC OpenData<br>
+          Data: BUILDING<br>
+          Data Last Updated: August 24, 2025<br>
+          Data Provided By: Office of Technology and Innovation<br>
+          <br><b>
+          Oldest: 1795<br>
+          Newest: 2025<br>
+          Mean: 1920<br>
+          Median: 1910<br></b>
+          <br>
+          Housing construction in Manhattan has been relatively steady over the past two centuries, 
+          peaking in the early 20th century. The oldest residential buildings are concentrated in 
+          West Village and Soho, while the newest developments cluster along the Hudson River and Roosevelt Island.
+          <br>
+          *Original data might not contain all the information
+        </div>
+        <div class="step" data-key="height_roof">
+          <span id="caption"><b>3. Building Height</b></span><br>
+          <br>
+          Source: NYC OpenData<br>
+          Data: BUILDING<br>
+          Data Last Updated: August 24, 2025<br>
+          Data Provided By: Office of Technology and Innovation<br>
+          <br><b>
+          Lowest: 6.6ft<br>
+          Highest: 900.0ft<br>
+          Mean: 85.7ft<br>
+          Median: 61.5ft<br></b>
+          <br>
+          The tallest residential buildings in Manhattan are concentrated in Lower Manhattan and along the Hudson River. 
+          Overall, the height distribution mirrors the building story data, with the vast majority of structures standing 
+          under 100 feet.<br>
+          <br>
+          *Original data might not contain all the information
+        </div>
+        <div class="step" data-key="station_time_taken">
+          <span id="caption"><b>4. Time to Closest Subway Station</b></span><br>
+          <br>
+          Source: Self Analysis in Rhino+Grasshopper<br>
+          <br><b>
+          Lowest: 0.14 min<br>
+          Highest: 20.15 min<br>
+          Mean: 5.40 min<br>
+          Median: 4.93 min<br></b>
+          <br>
+          Subway access is most convenient in Midtown and Lower Manhattan, where stations are densely concentrated. 
+          In contrast, parts of the East Village and areas along the Hudson River are the farthest from stations. 
+          Overall, however, the majority of buildings are within a 5-minute walk to the nearest subway.<br>
+          <br>
+          *Original data might not contain all the information
+        </div>
+        <div class="step" data-key="CURMRKTOT">
+          <span id="caption"><b>5. Average Property Value</b></span><br>
+          <br>
+          Source: NYC OpenData:<br>
+          Data: Property Valuation and Assessment Data Tax Classes 1,2,3,4<br>
+          Data: Last Updated: May 29, 2025<br>
+          Data Provided By: Department of Finance<br>
+          <br><b>
+          Lowest: $8,630.95<br>
+          Highest: $26,162,375.00<br>
+          Mean: $862,301.02<br>
+          Median: $441,500.00<br></b>
+          <br>
+          The average property value per residential building highlights the social divide across Manhattan. 
+          The most expensive properties cluster on the Upper East and Upper West Sides, while the least expensive 
+          are concentrated in the East Village, Chinatown, and Upper Manhattan.<br>
+          <br>
+          *Original data might not contain all the information
+        </div>
+        <div class="step" data-key="price_per_sqft">
+          <span id="caption"><b>6. Property Value Per Sqft</b></span><br>
+          <br>
+          Source: NYC OpenData:<br>
+          Data: Property Valuation and Assessment Data Tax Classes 1,2,3,4<br>
+          Source Last Updated: May 29, 2025<br>
+          Data Provided By: Department of Finance<br>
+          <br><b>
+          Lowest: $2.84<br>
+          Highest: $7,445.03<br>
+          Mean: $551.55<br>
+          Median: $261.22<br></b>
+          <br>
+          Per-square-foot property values are highest in the Upper East Side and Soho, and lowest in Upper Manhattan. 
+          Notably, Soho buildings tend to have below-average total property values but the highest per-square-foot 
+          values in Manhattan, reflecting smaller housing units that are exceptionally expensive relative to their size.<br>
+          <br>
+          *Original data might not contain all the information
+        </div>
+        <div class="step" data-key="price_inc">
+          <span id="caption"><b>7. Property Value Increase 2024-2025</b></span><br>
+          <br>
+          Source: NYC OpenData:<br>
+          Data: Property Valuation and Assessment Data Tax Classes 1,2,3,4<br>
+          Source Last Updated: May 29, 2025<br>
+          Data Provided By: Department of Finance<br>
+          <br><b>
+          Minimum: -23%<br>
+          Maximum: 64%<br>
+          Mean: 3.76%<br>
+          Median: 3.61%<br></b>
+          <br>
+          Most properties in Manhattan experienced a steady increase in market value between 2024 and 2025. 
+          However, notable pockets of decline are concentrated in Soho and Harlem, where many buildings show 
+          negative growth. In contrast, sharp spikes in value are observed in the East Village, 
+          the Upper East Side, and Washington Heights, highlighting areas of rapid appreciation.<br>
+          <br>
+          *Original data might not contain all the information
+        </div>
+        <div class="step" data-key="BLDG_CLASS">
+          <span id="caption"><b>8. Building Class</b></span><br>
+          <br>
+          Source: NYC OpenData:<br>
+          Data: Property Valuation and Assessment Data Tax Classes 1,2,3,4<br>
+          Source Last Updated: May 29, 2025<br>
+          Data Provided By: Department of Finance<br>
+          <br>
+          Most residential buildings in Manhattan are classified as multifamily elevator buildings or mixed-use 
+          residential and commercial properties. Less common types, such as one- and two-family homes and multifamily 
+          walk-up buildings, are primarily found in the West Village, Upper East Side, and Harlem.<br>
+          <br>
+          *Original data might not contain all the information
+        </div>
+        <div class="step" data-key="elevator">
+          <span id="caption"><b>9. Elevator Access</b></span><br>
+          <br>
+          Source: NYC OpenData:<br>
+          Data: Build Elevator Permit Applications<br>
+          Source Last Updated: August 23, 2025<br>
+          Data Provided By: Department of Buildings (DOB)<br>
+          <br><b>
+          With Elevators: 79,013 (38.1%)<br>
+          Without Elevators: 128,608 (61.9%)<br></b>
+          <br>
+          Nearly two-thirds of Manhattan’s residential buildings lack elevators, reflecting the prevalence of low-rise housing, 
+          especially in neighborhoods on the East and West Sides. In contrast, elevator-equipped buildings, though fewer in number, 
+          are generally larger in scale and more prominent on the map.<br>
+          <br>
+          *Original data might not contain all the information
+        </div>
+        <div class="step" data-key="res_area">
+          <span id="caption"><b>10. Residential Gross Area</b></span><br>
+          <br>
+          Source: NYC OpenData:<br>
+          Data: Property Valuation and Assessment Data Tax Classes 1,2,3,4<br>
+          Source Last Updated: May 29, 2025<br>
+          Data Provided By: Department of Finance<br>
+          <br><b>
+          Minimum: 6.67 sqft<br>
+          Maximum: 81,000 sqft<br>
+          Mean: 4004.11 sqft<br>
+          Median: 1995.00 sqft<br></b>
+          <br>
+          Tall, large-scale residential buildings with substantial gross floor area are concentrated 
+          along the waterfront. In contrast, smaller houses and walk-up buildings dominate neighborhoods 
+          such as Soho and Chinatown. Around Central Park, most buildings feature expansive 
+          residential gross floor areas, reflecting a denser, high-value housing stock. <br>
+          <br>
+          *Original data might not contain all the information
+        </div>
+        <div class="step" data-key="res_share">
+          <span id="caption"><b>11. Residential Area Share</b></span><br>
+          <br>
+          Source: NYC OpenData:<br>
+          Data: Property Valuation and Assessment Data Tax Classes 1,2,3,4<br>
+          Source Last Updated: May 29, 2025<br>
+          Data Provided By: Department of Finance<br>
+          <br><b>
+          Minimum: 0%<br>
+          Maximum: 100%<br>
+          Mean: 69.28%<br>
+          Median: 91.03%<br></b>
+          <br>
+          Most buildings in Manhattan are either fully residential or entirely non-residential, even within tax classes 1 and 2. 
+          Waterfront properties are more likely to be 100% residential, while buildings in Midtown and Soho often allocate 
+          significant portions of their space to commercial or mixed uses.<br>
+          <br>
+          *Original data might not contain all the information
+        </div>
+      </aside>
+      <div class="source-button">
+        <button id="source-1">1. Building Stories</button>
+        <button id="source-2">2. Building Construction Year</button>
+        <button id="source-3">3. Building Height</button>
+        <button id="source-4">4. Time to Closest Subway Station</button>
+        <button id="source-5">5. Average Property Value</button>
+        <button id="source-6">6. Property Value Per Sqft</button>
+        <button id="source-7">7. Property Value Increase 2024-2025</button>
+        <button id="source-8">8. Building Class</button>
+        <button id="source-9">9. Elevator Access</button>
+        <button id="source-10">10. Residential Gross Area</button>
+        <button id="source-11">11. Residential Area Share</button>
+      </div>
+      <div id="spotlight-dots"></div>
+    </section>
+
+    <section class="cluster">
+      <svg id="nodelink" width="1000" height="400"></svg>
+    </section>
+  </main>
+  <script src="main.js"></script>
+  <script src="map.js"></script>
+  <script src="data_viz.js"></script>
+  <script src="nodeLink.js"></script>
+</body>
+</html>

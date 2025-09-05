@@ -1,0 +1,312 @@
+/* =========================================================
+  Base
+   ========================================================= */
+html, body { 
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #141414;
+}
+
+/* =========================================================
+  Global Map Layers (fixed behind content)
+  ========================================================= */
+#map {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+#map.is-visible { opacity: 1; }
+
+#map-dimmer {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+/* =========================================================
+  Section: Title
+  ========================================================= */
+.title {
+  position: relative;
+  height: 100vh;
+  padding-bottom: 30vh;
+  overflow: hidden;
+  background: linear-gradient(
+    to right,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 40%,
+    rgba(0,0,0,0) 90%
+  );
+  z-index: 1;
+}
+
+.title-content {
+  position: reladtive;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 5rem;
+  padding: 6rem;
+  font-family: Helvetica, Arial, sans-serif;
+  text-align: left;
+}
+
+#title {
+  font-size: 4.5vw;
+  color: #ffffff;
+  margin: 0;
+  padding-bottom: 3vw;
+}
+#name {
+  font-size: 1.5vw;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+#detail {
+  font-size: 1.5vw;
+  color: #5e5e5e;
+  margin: 0;
+  padding: 0;
+  line-height: 1.3;
+}
+
+/* =========================================================
+  Section: Intro
+  ========================================================= */
+
+.intro {
+  position: relative;
+  height: 100vh;
+  padding-bottom: 30vh;
+  overflow: hidden;
+}
+
+/* masked background only (keeps children full-bright) */
+.intro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #000;
+  -webkit-mask-image:
+    linear-gradient(to right, #fff 0%, #fff 40%, transparent 90%),
+    linear-gradient(to bottom, #fff 0%, #fff 60%, transparent 100%);
+  -webkit-mask-composite: source-in;
+          mask-image:
+    linear-gradient(to right, #fff 0%, #fff 40%, transparent 90%),
+    linear-gradient(to bottom, #fff 0%, #fff 60%, transparent 100%);
+          mask-composite: intersect;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.masked-bg { 
+  position: absolute; 
+  inset: 0; 
+  overflow: hidden; 
+}
+
+/* fixed overlay (aligned with global map) */
+#map-overlays {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+#map-overlays.is-visible { opacity: 1; }
+
+#intro-title {
+  font-size: 2vw;
+  color: #b6cfd8;
+  line-height: 1.2;
+  z-index: 1;
+}
+#intro { padding-top: 15vw; }
+#intro, #description {
+  position: relative;
+  z-index: 1;
+  height: auto;
+  width: 36vw;
+  font-size: 1vw;
+  line-height: 1.6;
+  text-align: justify;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-left: 6rem;
+  font-family: Helvetica, Arial, sans-serif;
+  color: #cad0d4;
+  margin-top: 2rem;
+}
+#description {
+  font-size: 1vw;
+  padding-top: 2vw;
+  color: #a9a9a9;
+}
+
+/* =========================================================
+  Map Canvas Defaults (keep current behavior)
+  ========================================================= */
+#map, #map canvas, .mapboxgl-canvas {
+  filter: none;
+  opacity: 1;               /* preserves current always-visible map */
+  mix-blend-mode: normal;
+}
+
+
+
+/* =========================================================
+  Spotlight
+  ========================================================= */
+.map-spotlight {
+  position: relative;
+  height: 100vh;
+  margin-bottom: 35vh;      /* keep for your dots */
+}
+#source {
+  font-size: 1.6vw;
+  position: relative;
+  font-family: Helvetica, Arial, sans-serif;
+  padding-top: 10vh;
+  margin-left: 7rem;
+  z-index: 5;
+  color: #b6cfd8;
+}
+#source-text {
+  font-size: 0.8vw;
+  position: relative;
+  font-family: Helvetica, Arial, sans-serif;
+  max-width: 30vw;
+  margin-left: 7rem;
+  line-height: 1.5;
+  text-align: justify;
+  z-index: 5;
+  color: #cad0d4;
+  margin-bottom: 5vh;
+  border-bottom: 3px solid #7a7d80;
+}
+#spotlight-text {
+  position: relative;
+  z-index: 4; 
+  height: 100%;              /* fill the 100vh section */
+  display: grid;
+  /* align-content: center;   */
+  justify-content: start;    /* left-align horizontally */
+  left: 7rem;                /* your left inset */
+  max-width: 30vw;
+  margin: 0;                 /* remove 30rem top margin */
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 0.8vw;
+  line-height: 1.5;
+  text-align: justify;
+  color: #cad0d4;
+}
+#caption {
+  font-size: 1.6vw;
+  max-width: 60vw;
+  color: #b6cfd8;
+}
+
+/* show only the current step */
+#spotlight-text .step { display: none; }
+#spotlight-text .step.active { display: block; }
+
+.source-button {
+  position: absolute;
+  display: flex;
+  flex-direction: column;     /* stack buttons top-to-bottom */
+  align-items: flex-end;      /* align each button’s right edge */
+
+  top: 50%;                   /* vertical midpoint of section */
+  right: 7rem;                /* inset from right */
+  transform: translateY(-50%);/* true vertical centering */
+
+  font-size: 1.6vw;
+  font-family: Helvetica, Arial, sans-serif;
+  padding: 0.5em 1em;
+  z-index: 6;
+}
+.source-button button {
+  background-color: rgba(255, 255, 255, 0.08); /* transparent white overlay */
+  backdrop-filter: blur(8px);                 /* blur whatever is behind */
+  -webkit-backdrop-filter: blur(8px);         /* Safari support */
+  border: 0px;
+  margin: 0.3em 0;            /* vertical spacing between buttons */
+  text-align: right;          /* text aligned to the right edge */
+  width: 110%;
+  padding: 6px;
+  text-align: center;
+  border-radius: 50vh;
+  color:#cad0d4;
+}
+
+/* keep your dots as-is */
+#spotlight-dots {
+  position: sticky;
+  bottom: 30px;
+  margin: auto;
+  width: fit-content;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  pointer-events: auto;
+}
+#spotlight-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #424242;    
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#spotlight-dots .dot.active {
+  background: #fff; 
+}
+
+.nav-prev,
+.nav-next {
+  z-index: 5;
+  font-size: 5rem;         /* make arrow larger */
+  color: #fff;             /* arrow color */
+  background: none;        /* remove background */
+  border: none;            /* remove border */
+  padding: 0.5rem 1rem;    /* optional: adjust click area */
+  cursor: pointer;         /* pointer on hover */
+}
+
+.cluster {
+  background: transparent;
+  /* background-color: #0a0a0a; */
+  background-image: url("cluster_evolutionary.png");
+  background-repeat: no-repeat;
+  background-size: 100% auto;                     /* fit width, keep aspect ratio */
+  background-position: bottom center; 
+  position: relative;
+  height: 100vh;
+  z-index: 6;        
+  padding: 2rem 0;    
+  font-family: Helvetica, Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+}
+.cluster-img {
+  z-index: 2;}
+#map {
+  transition: opacity 0.5s ease;
+}
