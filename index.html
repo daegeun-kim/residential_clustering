@@ -275,11 +275,89 @@
         <button id="source-10">10. Residential Gross Area</button>
         <button id="source-11">11. Residential Area Share</button>
       </div>
-      <!-- <div id="spotlight-dots"></div> -->
     </section>
 
-    <section class="cluster">
-      <svg id="nodelink" width="1000" height="400"></svg>
+    <section class="cluster" id="bg-socio">
+      <div class="svg-wrap">
+        <svg id="nodelink" width="1000" height="400"></svg>
+      </div>
+      <div class="cluster-des">
+        <div class="socio-spatial active">
+          <u>K-means clustering</u> was performed using selected datasets, with <u>customized weightings</u> applied to 
+          different variables to reflect their relative importance. The resulting clusters were then interpreted through 
+          <u>qualitative analysis and assigned descriptive</u>, context-specific names.<br><br>
+          ___________________________________________________________________<br><br>
+          <span id="caption"><b>Socio Spatial Clusters</b></span><br><br>
+          <b>Weights: <br></b>
+          Building Height: 3<br>
+          Time to Closest Subway Station: 3<br>
+          Property Value Per Sqft: 1<br>
+          Elevator Access: 1<br>
+          Residential Area Share: 1<br></b>
+          <br>
+          This cluster integrates datasets on sociological traits, building form, and geographic location. 
+          The k-means analysis reveals that a significant share of Manhattan's residential stock falls into 
+          two main categories: Transit-Accessible Affordable Walk-Ups, concentrated around transit corridors, 
+          and Peripheral Walk-Ups, located at the city's edges with more limited accessibility.<br>
+        </div>
+
+        <div class="architectural">
+          <u>K-means clustering</u> was performed using selected datasets, with <u>customized weightings</u> applied to 
+          different variables to reflect their relative importance. The resulting clusters were then interpreted through 
+          <u>qualitative analysis and assigned descriptive</u>, context-specific names.<br><br>
+          ___________________________________________________________________<br><br>
+          <span id="caption"><b>Architectural Clusters</b></span><br><br>
+          <b>Weights: <br></b>
+          Building Stories: 3<br>
+          Building Height: 3<br>
+          Elevator Access: 1<br>
+          Residential Gross Area: 2<br>
+          Residential Area Share: 2<br></b>
+          <br>
+          The clusters are dominated by small-scale walk-ups. These buildings are relatively homogeneous, with low height, modest gross floor area (GFA), 
+          and high residential area share, while the other types in this cluster exhibit much wider variation across height, GFA, 
+          and residential share. Walk-ups also form an absolute majority, outnumbering all other types combined.<br>
+        </div>
+
+        <div class="evolutionary">
+          <u>K-means clustering</u> was performed using selected datasets, with <u>customized weightings</u> applied to 
+          different variables to reflect their relative importance. The resulting clusters were then interpreted through 
+          <u>qualitative analysis and assigned descriptive</u>, context-specific names.<br><br>
+          ___________________________________________________________________<br><br>
+          <span id="caption"><b>Evolutionary Clusters</b></span><br><br>
+          <b>Weights: <br></b>
+          Building Construction Year: 4<br>
+          Building Height: 2<br>
+          Property Value Per Sqft: 1<br>
+          Building Class: 1<br></b>
+          <br>
+          This cluster draws on datasets related to evolutionary traits, with a focus on temporal factors such as 
+          construction year alongside complementary attributes that influence the development of residential buildings. 
+          The k-means results indicate that a large portion of the building stock belongs to Early 20th-Century 
+          Multi-Family Low-Rises, followed by a secondary concentration of Mid-20th-Century Mid-Rises, 
+          reflecting the historical layering of Manhattan's built form.<br>
+        </div>
+
+        <div class="eco-fin">
+          <u>K-means clustering</u> was performed using selected datasets, with <u>customized weightings</u> applied to 
+          different variables to reflect their relative importance. The resulting clusters were then interpreted through 
+          <u>qualitative analysis and assigned descriptive</u>, context-specific names.<br><br>
+          ___________________________________________________________________<br><br>
+          <span id="caption"><b>Economic Financial Clusters</b></span><br><br>
+          <b>Weights: <br></b>
+          Building Height: 3<br>
+          Time to Closest Subway Station: 3<br>
+          Property Value Per Sqft: 1<br>
+          Elevator Access: 1<br>
+          Residential Area Share: 1<br></b>
+          <br>
+          This cluster integrates datasets capturing economic and financial dimensions, 
+          primarily those tied to property valuation and related indicators. The k-means analysis shows that many buildings 
+          fall within the category of Affordable Walk-Ups located near transit corridors, while a distinct subset displays 
+          exceptionally high property value growth rates, highlighting stark contrasts in financial performance across the 
+          housing stock.<br>
+        </div>
+      </div> 
     </section>
   </main>
   <script src="main.js"></script>

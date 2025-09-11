@@ -259,7 +259,8 @@ html, body {
   transition: transform 0.1s ease, background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
 }
 .source-button button:hover {
-  transform: translateY(2px);
+  transform: translateY(4px);
+  transition: transform 0.15s ease;
 }
 .source-button button.active {
   background-color: #e2e2e2;
@@ -272,19 +273,65 @@ html, body {
 
 .cluster {
   background: transparent;
-  /* background-color: #0a0a0a; */
-  background-image: url("cluster_evolutionary.png");
   background-repeat: no-repeat;
   background-size: 100% auto;                     /* fit width, keep aspect ratio */
   background-position: bottom center; 
   position: relative;
   height: 100vh;
   z-index: 6;        
-  padding: 2rem 0;    
+  padding: 2rem 5rem;    
   font-family: Helvetica, Arial, sans-serif;
   display: flex;
-  justify-content: center;
+  justify-content: left;
 }
+.svg-wrap {
+  position: relative;   /* or absolute if you want it floating */
+  width: 50vw;        /* lock size so siblings can’t change it */
+  height: 40vh;
+}
+#nodelink {
+  width: 100%; height: 100%;
+  display: block;       /* removes inline SVG baseline gap */
+}
+.cluster-des {
+  position: relative;
+  z-index: 2;           /* above background, below svg */
+  width: 30vw;
+  margin-left: 5rem;
+  margin-top: 3vh;
+  color: #cad0d4;
+  font-size: 0.8vw;
+  line-height: 1.2;
+  text-align: justify;
+}
+.cluster-des > div {
+  display: none;      /* hide all by default */
+}
+.cluster-des > div.active {
+  display: block;     /* only the active one shows */
+}
+
+.notes { margin-top: 1rem; }
+.cluster#bg-evolutionary  { background-image: url("cluster_evolutionary.png"); }
+.cluster#bg-architectural { background-image: url("cluster_architectural.png"); }
+.cluster#bg-socio         { background-image: url("cluster_sociospatial.png"); }
+.cluster#bg-economic      { background-image: url("cluster_ecofin.png"); }
+
+g.label.button:hover {
+  transform: translateY(4px);
+  transition: transform 0.15s ease;
+}
+g.label.active rect {
+  fill: #d3d3d3;
+  stroke: #ffffff;
+}
+g.label.active text {
+  fill: #000000;
+  font-weight: 500;
+}
+
+
+
 .cluster-img {
   z-index: 2;}
 #map {
