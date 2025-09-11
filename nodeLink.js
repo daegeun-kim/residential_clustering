@@ -112,7 +112,7 @@ labels.filter(d => !buttonIDs.has(d.id)).style("cursor", "default");
 
         labels.append("rect")
         .filter(d => buttonIDs.has(d.id))
-        .attr("rx", 15).attr("ry", 15) // rounded corners
+        .attr("rx", 20).attr("ry", 20) // rounded corners
         .attr("fill", "#232323ff")
         .attr("fill", "rgba(255, 255, 255, 0.11)");
 
